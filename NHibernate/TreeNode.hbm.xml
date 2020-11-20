@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="Hierarchy" assembly="Hierarchy">
+
+  <class name="TreeNode" table="TreeNode">
+
+    <id name="Id"   generator="native">
+      <column name ="Id" sql-type="bigint" not-null="true"/>
+    </id>
+
+    <property name="Data" type="String"></property>
+    
+    <set name="Children" table="TreeNode" cascade="save-update">
+      <key column="ParentId"/>
+      <one-to-many class="TreeNode"/>
+    </set>
+
+    <set name="Descendants">
+      <key column="RootNodeId" />
+      <one-to-many class="TreeNode"/>
+      <loader  query-ref="descendants"/>
+    </set>
+
+    <many-to-one name="Parent" class="TreeNode" column="ParentId"/>
+    
+  </class>
+
+  <sql-query name="descendants">
+    <load-collection alias="e" role="TreeNode.Descendants"/>
+    WITH TreeNodeHierarchy(ParentId, TreeNodeId)
+    AS 
+    (
+        SELECT ParentId, TreeNodeId
+        FROM TreeNode
+        WHERE ParentId = :id
+
+        UNION ALL
+
+        SELECT tn.ParentId, tn.TreeNodeId
+        FROM TreeNode tn
+        JOIN TreeNodeHierarchy tnh on tn.TreeNodeId - tnh.ParentId
+    )
+
+    SELECT :id as RootNodeId, e.*
+    FROM TreeNodeHierarchy tnh 
+    JOIN TreeNode tn ON tnh.TreeNodeId = tn.TreeNodeId
+  </sql-query>
+</hibernate-mapping>

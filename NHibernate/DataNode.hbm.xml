@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="Hierarchy" assembly="Hierarchy">
+
+  <class name="DataNode" table="DataNode">
+
+    <id name="Id" column="Id">
+     <generator class="foreign">
+        <param name="property">TreeNode</param>
+      </generator>
+    </id>
+    
+    <one-to-one name="TreeNode" class="TreeNode" constrained="true"/>
+
+    <property name="TextData" column="textData" type="String" />
+    <property name="IntegerData" column="integerData" />
+<!--
+    <list name="ListData" table="List" cascade="all">
+      <key column="DataNodeId"/>
+      <index column = "Position"/>
+      <one-to-many class="DataNode"/>
+    </list>
+-->
+  </class>
+</hibernate-mapping>

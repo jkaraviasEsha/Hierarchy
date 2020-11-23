@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NHibernate;
 using NHibernate.Cfg;
@@ -54,9 +55,23 @@ namespace Hierarchy
             l11.AddChild(l22);
             l22.AddChild(l30);
 
+            BuildDataNode(root);
+            BuildDataNode(l10);
+            BuildDataNode(l11);
+            BuildDataNode(l20);
+            BuildDataNode(l21);
+            BuildDataNode(l30);
+
             return root;
 
 
+        }
+
+        private static void BuildDataNode(TreeNode treeNode)
+        {
+            var dataNode = new DataNode(Guid.NewGuid().ToString(), new Random(Int32.MaxValue).Next());
+            treeNode.DataNode = dataNode;
+            dataNode.TreeNode = treeNode;
         }
     }
 }

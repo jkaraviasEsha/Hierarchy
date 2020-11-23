@@ -21,7 +21,7 @@
       <loader  query-ref="descendants"/>
     </set>
 
-    <many-to-one name="Parent" class="TreeNode" column="ParentId"/>
+    <one-to-one name="DataNode" class="DataNode" cascade="all"/>
     
   </class>
 

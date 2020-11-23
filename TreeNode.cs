@@ -4,12 +4,13 @@ using System.Text;
 
 namespace Hierarchy
 {
-    internal class TreeNode
+    public class TreeNode
     {
         public virtual Int64 Id { get; set; }
         public virtual ISet<TreeNode> Children { get; set; }
         public virtual TreeNode Parent { get; set; }
         public virtual string Data { get; set; }
+        public virtual DataNode DataNode { get; set; }
         public virtual ISet<TreeNode> Descendants { get; set; }
 
         public TreeNode()
@@ -28,4 +29,5 @@ namespace Hierarchy
             child.Parent = this;
         }
     }
+
 }

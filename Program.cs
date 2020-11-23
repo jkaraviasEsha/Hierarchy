@@ -28,7 +28,7 @@ namespace Hierarchy
                     session.Clear();
                     var loadedRoot = session.Get<TreeNode>(id);
 
-                    Console.WriteLine("Children.First.Children.First.Data: "+loadedRoot.Children.First().Children.First().Data);
+                    Console.WriteLine("Children.First.Children.First.Data: \n "+loadedRoot.Children.First().Children.First().DataNode);
 
                 }
             }
@@ -69,7 +69,8 @@ namespace Hierarchy
 
         private static void BuildDataNode(TreeNode treeNode)
         {
-            var dataNode = new DataNode(Guid.NewGuid().ToString(), new Random(Int32.MaxValue).Next());
+            var dataNode = new DataNode(Guid.NewGuid().ToString(), new Random(Int32.MaxValue).Next(), 
+                new List<String> {DateTimeOffset.UtcNow.ToString(), "errr, uh", treeNode.GetHashCode().ToString()});
             treeNode.DataNode = dataNode;
             dataNode.TreeNode = treeNode;
         }

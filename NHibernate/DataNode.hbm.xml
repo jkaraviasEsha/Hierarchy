@@ -15,12 +15,10 @@
 
     <property name="TextData" column="textData" type="String" />
     <property name="IntegerData" column="integerData" />
-<!--
-    <list name="ListData" table="List" cascade="all">
+    <list name="ListData" table="List" cascade="all" >
       <key column="DataNodeId"/>
-      <index column = "Position"/>
-      <one-to-many class="DataNode"/>
+      <list-index column = "Position"/>
+      <element column="ListData" type="String"/>
     </list>
--->
-  </class>
+</class>
 </hibernate-mapping>
